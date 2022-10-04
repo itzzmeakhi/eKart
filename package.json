@@ -1,0 +1,32 @@
+{
+  "name": "ekart",
+  "version": "1.0.0",
+  "description": "eKart shopping application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node kart-be/server.js",
+    "server": "nodemon kart-be/server.js",
+    "client": "npm start --prefix kart-fe",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itzzmeakhi/eKart.git"
+  },
+  "author": "Akhil Reddy Mallidi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/itzzmeakhi/eKart/issues"
+  },
+  "homepage": "https://github.com/itzzmeakhi/eKart#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.4"
+  },
+  "devDependencies": {
+    "concurrently": "^7.4.0",
+    "nodemon": "^2.0.20"
+  }
+}
