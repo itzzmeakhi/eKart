@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -10,6 +10,8 @@ import Message from '../../components/Message/Message';
 import { fetchProduct } from './../../redux/products/actions';
 
 const ProductDetails = () => {
+  const [qty, setQty] = useState(1);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -20,6 +22,10 @@ const ProductDetails = () => {
   const product = useSelector(state => state.pdp.product);
   const loading = useSelector(state => state.pdp.loading);
   const error = useSelector(state => state.pdp.error);
+
+  const addToCartHandler = () => {
+    navigate(`/cart/${id}?qty=${qty}`);
+  };
 
   return (
     <>
@@ -54,21 +60,48 @@ const ProductDetails = () => {
                   <ListGroup>
                     <ListGroup.Item>
                       <Row>
-                        <Col>Price: </Col>
+                        <Col md={4}>Price: </Col>
                         <Col>{product.price}</Col>
                       </Row>
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <Row>
-                        <Col>Status: </Col>
+                        <Col md={4}>Status: </Col>
                         <Col>{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</Col>
                       </Row>
                     </ListGroup.Item>
+                    {product.countInStock > 0 && (
+                      <ListGroup.Item>
+                        <Row>
+                          <Col md={4}>Qty: </Col>
+                          <Col>
+                            <Button 
+                              size='sm' 
+                              variant='danger' 
+                              className='mx-2' 
+                              disabled={qty === 1}
+                              onClick={() => setQty(qty - 1)}>
+                                -
+                            </Button>
+                            {qty}
+                            <Button 
+                              size='sm' 
+                              variant='success' 
+                              className='mx-2' 
+                              disabled={qty === product.countInStock}
+                              onClick={() => setQty(qty + 1)}>
+                                +
+                            </Button>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                    )}
                     <ListGroup.Item>
                       <Button
                         className='btn-block'
                         style={{ width: '100%' }}
                         type='button'
+                        onClick={() => addToCartHandler()}
                         disabled={product.countInStock === 0}>
                           Add to Cart
                       </Button>

@@ -6,6 +6,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
+import Cart from './pages/Cart/Cart';
 
 import './App.css';
 
@@ -18,6 +19,10 @@ const App = () => {
           <Routes>
             <Route path='/' exact element={<Home />} />
             <Route path='/product/:id' element={<ProductDetails />} />
+            <Route path="/cart">
+              <Route index element={<Cart />} />
+              <Route path=":id" element={<Cart />} />
+            </Route>
           </Routes>
         </Container>
       </main>
